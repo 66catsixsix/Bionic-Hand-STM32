@@ -1,0 +1,7 @@
+../my_drivers/LVGL/src/draw/sw/../../misc/lv_mem.h:164:20:lv_memset_00	16	static
+../my_drivers/LVGL/src/draw/sw/../../misc/lv_area.h:123:26:lv_area_get_width	16	static
+../my_drivers/LVGL/src/draw/sw/../../misc/lv_area.h:133:26:lv_area_get_height	16	static
+../my_drivers/LVGL/src/draw/sw/lv_draw_sw_layer.c:43:31:lv_draw_sw_layer_create	48	static
+../my_drivers/LVGL/src/draw/sw/lv_draw_sw_layer.c:94:6:lv_draw_sw_layer_adjust	32	static
+../my_drivers/LVGL/src/draw/sw/lv_draw_sw_layer.c:115:6:lv_draw_sw_layer_blend	48	static
+../my_drivers/LVGL/src/draw/sw/lv_draw_sw_layer.c:140:6:lv_draw_sw_layer_destroy	16	static

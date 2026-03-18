@@ -1,0 +1,8 @@
+../my_drivers/User/Src/touch_800x480.c:38:6:GT9XX_Reset	8	static
+../my_drivers/User/Src/touch_800x480.c:67:9:GT9XX_WriteHandle	24	static
+../my_drivers/User/Src/touch_800x480.c:96:9:GT9XX_WriteData	24	static
+../my_drivers/User/Src/touch_800x480.c:126:9:GT9XX_WriteReg	24	static
+../my_drivers/User/Src/touch_800x480.c:161:9:GT9XX_ReadReg	32	static
+../my_drivers/User/Src/touch_800x480.c:205:6:PanelRecognition	40	static
+../my_drivers/User/Src/touch_800x480.c:245:9:Touch_Init	24	static
+../my_drivers/User/Src/touch_800x480.c:301:6:Touch_Scan	56	static

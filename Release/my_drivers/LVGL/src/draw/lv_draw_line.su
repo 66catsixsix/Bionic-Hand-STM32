@@ -1,0 +1,5 @@
+../my_drivers/LVGL/src/draw/../core/../misc/lv_mem.h:164:20:lv_memset_00	16	static
+../my_drivers/LVGL/src/draw/../core/../misc/lv_color.h:588:26:lv_color_make	16	static
+../my_drivers/LVGL/src/draw/../core/../misc/lv_color.h:693:26:lv_color_black	8	static
+../my_drivers/LVGL/src/draw/lv_draw_line.c:37:28:lv_draw_line_dsc_init	24	static
+../my_drivers/LVGL/src/draw/lv_draw_line.c:45:28:lv_draw_line	32	static

@@ -1,0 +1,4 @@
+/home/ouo/li_lvgl/lv_motor/feetech_servo_h750/my_drivers/LVGL/src/../src/hal/../draw/../misc/lv_color.h:593:26:lv_color_hex	1
+/home/ouo/li_lvgl/lv_motor/feetech_servo_h750/my_drivers/LVGL/src/../src/core/lv_disp.h:205:20:lv_scr_load	1
+../my_core/ui/main_screen.c:17:13:servo_data_update	2
+../my_core/ui/main_screen.c:25:6:Main_control_scr_init	1

@@ -1,0 +1,12 @@
+../my_drivers/LVGL/demos/music/../../src/hal/../draw/../misc/lv_color.h:588:26:lv_color_make	1
+../my_drivers/LVGL/demos/music/../../src/hal/../draw/../misc/lv_color.h:593:26:lv_color_hex	1
+../my_drivers/LVGL/demos/music/../../src/hal/../draw/../misc/lv_color.h:689:26:lv_color_white	1
+../my_drivers/LVGL/demos/music/../../src/core/lv_disp.h:182:26:lv_scr_act	1
+../my_drivers/LVGL/demos/music/../../src/core/lv_disp.h:191:26:lv_layer_top	1
+../my_drivers/LVGL/demos/music/../../src/core/lv_disp.h:205:20:lv_scr_load	1
+../my_drivers/LVGL/demos/music/lv_demo_music.c:114:6:lv_demo_music	1
+../my_drivers/LVGL/demos/music/lv_demo_music.c:126:14:_lv_demo_music_get_title	2
+../my_drivers/LVGL/demos/music/lv_demo_music.c:132:14:_lv_demo_music_get_artist	2
+../my_drivers/LVGL/demos/music/lv_demo_music.c:138:14:_lv_demo_music_get_genre	2
+../my_drivers/LVGL/demos/music/lv_demo_music.c:144:10:_lv_demo_music_get_track_length	2
+../my_drivers/LVGL/demos/music/lv_demo_music.c:155:13:auto_step_cb	15

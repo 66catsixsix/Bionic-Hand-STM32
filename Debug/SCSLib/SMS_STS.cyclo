@@ -1,0 +1,8 @@
+../SCSLib/SMS_STS.c:13:5:WritePosEx	2
+../SCSLib/SMS_STS.c:29:5:RegWritePosEx	2
+../SCSLib/SMS_STS.c:45:6:SyncWritePosEx	5
+../SCSLib/SMS_STS.c:73:5:WheelMode	1
+../SCSLib/SMS_STS.c:78:5:WriteSpe	1
+../SCSLib/SMS_STS.c:90:5:CalibrationOfs	1
+../SCSLib/SMS_STS.c:95:5:unLockEpromEx	1
+../SCSLib/SMS_STS.c:100:5:LockEpromEx	1

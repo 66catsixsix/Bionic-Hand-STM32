@@ -1,0 +1,17 @@
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:126:20:lv_anim_set_var	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:138:20:lv_anim_set_exec_cb	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:148:20:lv_anim_set_time	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:158:20:lv_anim_set_delay	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:169:20:lv_anim_set_values	24	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:227:20:lv_anim_set_ready_cb	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:247:20:lv_anim_set_playback_time	16	static
+../my_drivers/LVGL/demos/stress/../../src/misc/lv_anim.h:267:20:lv_anim_set_repeat_count	16	static
+../my_drivers/LVGL/demos/stress/../../src/core/lv_disp.h:182:26:lv_scr_act	8	static
+../my_drivers/LVGL/demos/stress/../../src/widgets/lv_slider.h:84:20:lv_slider_set_value	24	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:45:6:lv_demo_stress	8	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:55:13:obj_test_task_cb	168	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:428:13:auto_del	88	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:440:13:msgbox_del	16	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:445:13:set_y_anim	16	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:450:13:set_width_anim	16	static
+../my_drivers/LVGL/demos/stress/lv_demo_stress.c:455:13:arc_set_end_angle_anim	16	static

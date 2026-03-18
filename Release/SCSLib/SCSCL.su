@@ -1,0 +1,17 @@
+../SCSLib/SCSCL.c:14:5:WritePos	32	static
+../SCSLib/SCSCL.c:24:5:RegWritePos	32	static
+../SCSLib/SCSCL.c:34:6:RegWriteAction	8	static
+../SCSLib/SCSCL.c:39:6:SyncWritePos	232	static
+../SCSLib/SCSCL.c:62:5:PWMMode	24	static
+../SCSLib/SCSCL.c:72:5:WritePWM	24	static
+../SCSLib/SCSCL.c:83:5:EnableTorque	16	static
+../SCSLib/SCSCL.c:88:5:unLockEprom	16	static
+../SCSLib/SCSCL.c:93:5:LockEprom	16	static
+../SCSLib/SCSCL.c:98:5:FeedBack	24	static
+../SCSLib/SCSCL.c:107:5:ReadPos	24	static
+../SCSLib/SCSCL.c:123:5:ReadSpeed	24	static
+../SCSLib/SCSCL.c:139:5:ReadLoad	24	static
+../SCSLib/SCSCL.c:155:5:ReadVoltage	24	static
+../SCSLib/SCSCL.c:166:5:ReadTemper	24	static
+../SCSLib/SCSCL.c:177:5:ReadMove	24	static
+../SCSLib/SCSCL.c:188:5:ReadCurrent	24	static

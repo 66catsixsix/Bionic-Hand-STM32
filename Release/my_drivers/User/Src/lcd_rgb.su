@@ -1,0 +1,4 @@
+../my_drivers/User/Src/lcd_rgb.c:51:6:LCD_PanelModify	32	static
+../my_drivers/User/Src/lcd_rgb.c:96:6:HAL_LTDC_MspInit	72	static
+../my_drivers/User/Src/lcd_rgb.c:238:6:MX_LTDC_Init	64	static
+../my_drivers/User/Src/lcd_rgb.c:384:6:LCD_CopyBuffer	16	static
