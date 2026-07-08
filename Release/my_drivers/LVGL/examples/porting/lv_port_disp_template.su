@@ -1,6 +1,0 @@
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:50:6:lv_port_disp_init	8	static
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:135:13:disp_init	8	static
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:145:6:disp_enable_update	4	static
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:152:6:disp_disable_update	4	static
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:160:13:disp_flush	24	static
-../my_drivers/LVGL/examples/porting/lv_port_disp_template.c:186:6:HAL_LTDC_LineEventCallback	16	static

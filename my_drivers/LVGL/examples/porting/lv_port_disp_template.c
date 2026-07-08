@@ -12,14 +12,15 @@
 #include "lv_port_disp_template.h"
 #include <stdbool.h>
 #include "lcd_rgb.h"
-#include "draw/stm32_dma2d/lv_gpu_stm32_dma2d.h"
 
 /*********************
  *      DEFINES
  *********************/
  
 extern	LTDC_HandleTypeDef hltdc;		// LTDC���
-#define 	LVGL_MemoryAdd	( LCD_MemoryAdd + LCD_Width*LCD_Height*BytesPerPixel_0 )	// ��ʾ��������ַ
+#define LVGL_BUF_LINES 136
+#define 	LVGL_MemoryAdd	( LCD_MemoryAdd + LCD_Width*LCD_Height*BytesPerPixel_0 )
+#define LVGL_BUF_PIXELS (LCD_Width * LVGL_BUF_LINES)
 
 
 /**********************
@@ -90,11 +91,10 @@ void lv_port_disp_init(void)
 //    static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
 //    lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
-    /* Example for 3) also set disp_drv.full_refresh = 1 below*/
-    static lv_disp_draw_buf_t draw_buf_dsc_3;
-    static lv_color_t *buf_3_1 = (lv_color_t * )(LVGL_MemoryAdd);             /*A screen sized buffer*/
-    static lv_color_t *buf_3_2 = (lv_color_t * )(LVGL_MemoryAdd + LCD_Width*LCD_Height*sizeof(lv_color_t));    
-    lv_disp_draw_buf_init(&draw_buf_dsc_3, buf_3_1, buf_3_2, LCD_Width * LCD_Height);   /*Initialize the display buffer*/
+    static lv_disp_draw_buf_t draw_buf_dsc_2;
+    static lv_color_t *buf_2_1 = (lv_color_t *)(LVGL_MemoryAdd);
+    static lv_color_t *buf_2_2 = (lv_color_t *)(LVGL_MemoryAdd + LVGL_BUF_PIXELS * sizeof(lv_color_t));
+    lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, LVGL_BUF_PIXELS);
 
     /*-----------------------------------
      * Register the display in LVGL
@@ -113,15 +113,13 @@ void lv_port_disp_init(void)
     disp_drv.flush_cb = disp_flush;
 
     /*Set a display buffer*/
-    disp_drv.draw_buf = &draw_buf_dsc_3;
+    disp_drv.draw_buf = &draw_buf_dsc_2;
+    disp_drv.full_refresh = 0;
 
-    /*Required for Example 3)*/
-    disp_drv.full_refresh = 1;		//˫ȫ������Ҫ�򿪴�����
-
-    /* 启用 DMA2D 硬件加速 draw context */
-    disp_drv.draw_ctx_init   = lv_draw_stm32_dma2d_ctx_init;
-    disp_drv.draw_ctx_deinit = lv_draw_stm32_dma2d_ctx_deinit;
-    disp_drv.draw_ctx_size   = sizeof(lv_draw_stm32_dma2d_ctx_t);
+    /* Fill a memory array with a color if you have GPU.
+     * Note that, in lv_conf.h you can enable GPUs that has built-in support in LVGL.
+     * But if you have a different GPU you can use with this callback.*/
+    //disp_drv.gpu_fill_cb = gpu_fill;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
@@ -135,7 +133,6 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
-    lv_draw_stm32_dma2d_init();   /* 启动 DMA2D 时钟并初始化输出格式 */
 }
 
 volatile bool disp_flush_enabled = true;
@@ -159,22 +156,20 @@ void disp_disable_update(void)
  *'lv_disp_flush_ready()' has to be called when finished.*/
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
-	
-//	SCB_CleanInvalidateDCache();
-//	
-//	LCD_CopyBuffer(area->x1, area->y1, area->x2 - area->x1+1, area->y2 - area->y1 +1,(uint32_t*)color_p);	
-//    
-//	/*IMPORTANT!!!
-//	*Inform the graphics library that you are ready with the flushing*/
-//	lv_disp_flush_ready(disp_drv);	
-	
-    /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
+    if(disp_flush_enabled == false)
+    {
+        lv_disp_flush_ready(disp_drv);
+        return;
+    }
 
-	LTDC_Layer1->CFBAR = (uint32_t)color_p;			// �л��Դ��ַ
+    SCB_CleanInvalidateDCache();
+    LCD_CopyBuffer((uint16_t)area->x1,
+                   (uint16_t)area->y1,
+                   (uint16_t)(area->x2 - area->x1 + 1),
+                   (uint16_t)(area->y2 - area->y1 + 1),
+                   (uint32_t *)color_p);
 
-	/*IMPORTANT!!!
-	*Inform the graphics library that you are ready with the flushing*/
-	lv_disp_flush_ready(disp_drv);
+    lv_disp_flush_ready(disp_drv);
 }
 
 /**
@@ -185,9 +180,8 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
   */
 void HAL_LTDC_LineEvenCallback(LTDC_HandleTypeDef *hltdc)
 {   
-	// 触发立即重载影子寄存器，让新帧缓冲地址生效
-	__HAL_LTDC_RELOAD_CONFIG(hltdc);					
-	HAL_LTDC_ProgramLineEvent(hltdc, 0);
+    __HAL_LTDC_RELOAD_CONFIG(hltdc);
+    HAL_LTDC_ProgramLineEvent(hltdc, 0);
 }
 
 

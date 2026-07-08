@@ -1,5 +1,0 @@
-../SCSLib/SCSerail.c:17:5:readSCS	16	static
-../SCSLib/SCSerail.c:23:5:writeSCS	16	static
-../SCSLib/SCSerail.c:35:5:writeByteSCS	16	static
-../SCSLib/SCSerail.c:45:6:rFlushSCS	8	static
-../SCSLib/SCSerail.c:51:6:wFlushSCS	8	static

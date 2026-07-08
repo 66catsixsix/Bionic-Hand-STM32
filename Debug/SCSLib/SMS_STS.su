@@ -1,8 +1,0 @@
-../SCSLib/SMS_STS.c:13:5:WritePosEx	32	static
-../SCSLib/SMS_STS.c:29:5:RegWritePosEx	32	static
-../SCSLib/SMS_STS.c:45:6:SyncWritePosEx	264	static
-../SCSLib/SMS_STS.c:73:5:WheelMode	16	static
-../SCSLib/SMS_STS.c:78:5:WriteSpe	24	static
-../SCSLib/SMS_STS.c:90:5:CalibrationOfs	16	static
-../SCSLib/SMS_STS.c:95:5:unLockEpromEx	16	static
-../SCSLib/SMS_STS.c:100:5:LockEpromEx	16	static

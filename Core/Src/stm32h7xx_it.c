@@ -12,8 +12,10 @@
 #include "task.h"
 
 extern void xPortSysTickHandler( void );
+extern UART_HandleTypeDef huart3;
 
 extern LTDC_HandleTypeDef hltdc;
+
 
 void NMI_Handler(void)
 {
@@ -50,7 +52,9 @@ void DebugMon_Handler(void) {}
 void SysTick_Handler(void)
 {
     HAL_IncTick();
-    //lv_tick_inc(portTICK_PERIOD_MS);   /* LVGL 时基，自动匹配 FreeRTOS tick 周期 */
+#if !LV_TICK_CUSTOM
+    lv_tick_inc(portTICK_PERIOD_MS);   /* 若未使用自定义 tick，则手动推进 LVGL 时基 */
+#endif
 #if ( INCLUDE_xTaskGetSchedulerState == 1 )
     if( xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED )
 #endif
@@ -73,4 +77,10 @@ void LTDC_IRQHandler(void)
 void LTDC_ER_IRQHandler(void)
 {
     HAL_LTDC_IRQHandler(&hltdc);
+}
+
+void USART3_IRQHandler(void)
+{
+    HAL_UART_IRQHandler(&huart3);
+    //HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
 }

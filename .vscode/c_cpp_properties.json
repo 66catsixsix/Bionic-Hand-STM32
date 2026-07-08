@@ -4,20 +4,7 @@
             "name": "STM32H750",
             "compileCommands": "${workspaceFolder}/compile_commands.json",
             "includePath": [
-                "${workspaceFolder}/Core/Inc",
-                "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc",
-                "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
-                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
-                "${workspaceFolder}/Drivers/CMSIS/Include",
-                "${workspaceFolder}/SCSLib",
-                "${workspaceFolder}/my_drivers",
-                "${workspaceFolder}/my_drivers/LVGL",
-                "${workspaceFolder}/my_drivers/LVGL/src",
-                "${workspaceFolder}/my_drivers/LVGL/examples/porting",
-                "${workspaceFolder}/my_drivers/User/Inc",
-                "${workspaceFolder}/FreeRtos/portable",
-                "${workspaceFolder}/FreeRtos/include",
-                "${workspaceFolder}/my_core/ui_H"
+               "${workspaceFolder}/**"
             ],
             "defines": [
                 "STM32H750xx",

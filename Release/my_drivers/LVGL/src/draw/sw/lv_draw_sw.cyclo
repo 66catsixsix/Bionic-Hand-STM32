@@ -1,7 +1,0 @@
-../my_drivers/LVGL/src/draw/sw/../../misc/../font/../misc/lv_area.h:123:26:lv_area_get_width	1
-../my_drivers/LVGL/src/draw/sw/../../misc/lv_mem.h:132:22:lv_memcpy	1
-../my_drivers/LVGL/src/draw/sw/../../misc/lv_mem.h:164:20:lv_memset_00	1
-../my_drivers/LVGL/src/draw/sw/lv_draw_sw.c:40:6:lv_draw_sw_init_ctx	1
-../my_drivers/LVGL/src/draw/sw/lv_draw_sw.c:67:6:lv_draw_sw_deinit_ctx	1
-../my_drivers/LVGL/src/draw/sw/lv_draw_sw.c:75:6:lv_draw_sw_wait_for_finish	1
-../my_drivers/LVGL/src/draw/sw/lv_draw_sw.c:81:6:lv_draw_sw_buffer_copy	2

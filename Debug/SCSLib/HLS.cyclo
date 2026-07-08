@@ -1,4 +1,0 @@
-../SCSLib/HLS.c:13:5:WritePosEx2	2
-../SCSLib/HLS.c:29:5:RegWritePosEx2	2
-../SCSLib/HLS.c:45:6:SyncWritePosEx2	5
-../SCSLib/HLS.c:73:5:WriteSpeEx	1

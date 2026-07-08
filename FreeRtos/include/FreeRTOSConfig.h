@@ -51,7 +51,7 @@
  * The default value is set to 20MHz and matches the QEMU demo settings.  Your
  * application will certainly need a different value so set this correctly.
  * This is very often, but not always, equal to the main system clock frequency. */
-#define configCPU_CLOCK_HZ    ( ( unsigned long ) 240000000 )
+#define configCPU_CLOCK_HZ    ( ( unsigned long ) 480000000 )
 
 /* configSYSTICK_CLOCK_HZ is an optional parameter for ARM Cortex-M ports only.
  *
@@ -322,6 +322,7 @@
  * on the FreeRTOS port. */
 #define configMAX_API_CALL_INTERRUPT_PRIORITY    configMAX_SYSCALL_INTERRUPT_PRIORITY
 
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
 /******************************************************************************/
 /* Hook and callback function related definitions. ****************************/
 /******************************************************************************/

@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_BionicHandHost_FILE /home/ovo/文档/every/feetech_servo_h750/qt_app/BionicHandHost)
+set(__QT_DEPLOY_TARGET_BionicHandHost_TYPE EXECUTABLE)

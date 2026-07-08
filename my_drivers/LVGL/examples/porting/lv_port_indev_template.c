@@ -192,6 +192,7 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     static lv_coord_t last_x = 0;
     static lv_coord_t last_y = 0;
+    LV_UNUSED(indev_drv);
 
     /*Save the pressed coordinates and the state*/
     if(touchpad_is_pressed()) {

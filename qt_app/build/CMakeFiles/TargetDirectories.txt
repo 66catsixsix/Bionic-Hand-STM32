@@ -1,0 +1,4 @@
+/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/BionicHandHost.dir
+/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/edit_cache.dir
+/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/rebuild_cache.dir
+/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/BionicHandHost_autogen.dir

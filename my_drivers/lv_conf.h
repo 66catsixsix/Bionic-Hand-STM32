@@ -52,7 +52,7 @@
     #define LV_MEM_SIZE (4096U * 1024U)          /*[bytes]*/
 
     /*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.*/
-    #define LV_MEM_ADR (0xC0000000+0x400000)    // ���ܺ�LTDC�Դ桢LVGL�Ĳ㻺���ͻ
+    #define LV_MEM_ADR (0xC0000000+0x400000)    // 閿熸枻鎷烽敓鏉扮尨鎷稬TDC閿熺殕瀛樸€丩VGL閿熶茎灞傜紦閿熸枻鎷烽敓閰碉拷
  
     /*Instead of an address give a memory allocator that will be called to get a memory pool for LVGL. E.g. my_malloc*/
     #if LV_MEM_ADR == 0
@@ -357,10 +357,10 @@
 #define LV_FONT_MONTSERRAT_14 1
 #define LV_FONT_MONTSERRAT_16 1
 #define LV_FONT_MONTSERRAT_18 0
-#define LV_FONT_MONTSERRAT_20 0
+#define LV_FONT_MONTSERRAT_20 1
 #define LV_FONT_MONTSERRAT_22 1
 #define LV_FONT_MONTSERRAT_24 0
-#define LV_FONT_MONTSERRAT_26 0
+#define LV_FONT_MONTSERRAT_26 1
 #define LV_FONT_MONTSERRAT_28 0
 #define LV_FONT_MONTSERRAT_30 0
 #define LV_FONT_MONTSERRAT_32 1

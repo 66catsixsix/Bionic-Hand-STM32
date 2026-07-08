@@ -15,7 +15,7 @@
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.jlink.selected_rtos" value="RTOSPlugin_Azure"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.jlinkenable_rtos" value="false"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.access_port_id" value="0"/>
-    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.cubeprog_external_loaders" value="[{&quot;fLoaderPath&quot;:&quot;STM32CubePro_FK750M5_XBH6_V0.stldr&quot;,&quot;fInitialize&quot;:false,&quot;fIsEnabled&quot;:true}]"/>
+    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.cubeprog_external_loaders" value="[{&quot;fLoaderPath&quot;:&quot;/home/ovo/文档/motor/li_lvgl/lv_motor/feetech_servo_h750/boot/STM32CubePro_FK750M5_XBH6_V0.stldr&quot;,&quot;fInitialize&quot;:true,&quot;fIsEnabled&quot;:true}]"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.debug_auth__pwd_enable" value="false"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.debug_auth_certif_path" value=""/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.debug_auth_check_enable" value="false"/>
@@ -31,20 +31,20 @@
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.limit_swo_clock.value" value=""/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.loadList" value="{&quot;fItems&quot;:[{&quot;fIsFromMainTab&quot;:true,&quot;fPath&quot;:&quot;Debug/feetech_servo_h750.elf&quot;,&quot;fProjectName&quot;:&quot;feetech_servo_h750&quot;,&quot;fPerformBuild&quot;:true,&quot;fDownload&quot;:true,&quot;fLoadSymbols&quot;:true}]}"/>
     <intAttribute key="com.st.stm32cube.ide.mcu.debug.launch.mode" value="0"/>
+    <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.multi_drop_enabled" value="false"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.override_start_address_mode" value="default"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.port" value=""/>
-    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.remoteCommand" value="target remote"/>
+    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.remoteCommand" value="target extended-remote"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.semihosting" value="Disabled"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.startServer" value="true"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.startuptab.exception.divby0" value="true"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.startuptab.exception.unaligned" value="false"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.startuptab.haltonexception" value="true"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.swd_mode" value="true"/>
-    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.swv_port" value="61235"/>
+    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.swv_port" value="3344"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.swv_trace_hclk" value="240000000"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.useRemoteTarget" value="true"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.launch.vector_table" value=""/>
-    <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.launch.verify_flash_download" value="true"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.CTI_ALLOW_HALT" value="false"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.CTI_SIGNAL_HALT" value="false"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.DBG_DEVICE_SHAREABLE_ALLOWED" value="false"/>
@@ -56,6 +56,7 @@
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_GENERATOR_OPTION" value="false"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_NAME" value="&quot;${stm32cubeide_openocd_path}/openocd&quot;"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_OTHER_OPTIONS" value=""/>
+    <stringAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_RESTART_CONFIGURATIONS" value="{&quot;fVersion&quot;:1,&quot;fItems&quot;:[{&quot;fDisplayName&quot;:&quot;Reset halt&quot;,&quot;fIsSuppressible&quot;:false,&quot;fResetAttribute&quot;:&quot;Reset halt&quot;,&quot;fResetStrategies&quot;:[{&quot;fDisplayName&quot;:&quot;Reset halt&quot;,&quot;fLaunchAttribute&quot;:&quot;monitor reset halt&quot;,&quot;fGdbCommands&quot;:[&quot;monitor reset halt&quot;],&quot;fCmdOptions&quot;:[]},{&quot;fDisplayName&quot;:&quot;Reset init&quot;,&quot;fLaunchAttribute&quot;:&quot;monitor reset init&quot;,&quot;fGdbCommands&quot;:[&quot;monitor reset init&quot;],&quot;fCmdOptions&quot;:[]},{&quot;fDisplayName&quot;:&quot;None&quot;,&quot;fLaunchAttribute&quot;:&quot;&quot;,&quot;fGdbCommands&quot;:[],&quot;fCmdOptions&quot;:[]}],&quot;fGdbCommandGroup&quot;:{&quot;name&quot;:&quot;Additional commands&quot;,&quot;commands&quot;:[]},&quot;fStartApplication&quot;:true},{&quot;fDisplayName&quot;:&quot;Reset init&quot;,&quot;fIsSuppressible&quot;:false,&quot;fResetAttribute&quot;:&quot;Reset init&quot;,&quot;fResetStrategies&quot;:[{&quot;fDisplayName&quot;:&quot;Reset halt&quot;,&quot;fLaunchAttribute&quot;:&quot;monitor reset halt&quot;,&quot;fGdbCommands&quot;:[&quot;monitor reset halt&quot;],&quot;fCmdOptions&quot;:[]},{&quot;fDisplayName&quot;:&quot;Reset init&quot;,&quot;fLaunchAttribute&quot;:&quot;monitor reset init&quot;,&quot;fGdbCommands&quot;:[&quot;monitor reset init&quot;],&quot;fCmdOptions&quot;:[]},{&quot;fDisplayName&quot;:&quot;None&quot;,&quot;fLaunchAttribute&quot;:&quot;&quot;,&quot;fGdbCommands&quot;:[],&quot;fCmdOptions&quot;:[]}],&quot;fGdbCommandGroup&quot;:{&quot;name&quot;:&quot;Additional commands&quot;,&quot;commands&quot;:[]},&quot;fStartApplication&quot;:true}]}"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_SCRIPT" value="${ProjDirPath}/feetech_servo_h750.cfg"/>
     <stringAttribute key="com.st.stm32cube.ide.mcu.debug.openocd.OPENOCD_SCRIPT_CHOICE" value="automated"/>
     <booleanAttribute key="com.st.stm32cube.ide.mcu.debug.openocdenable_rtos" value="false"/>
@@ -85,9 +86,9 @@
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doReset" value="false"/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.initCommands" value=""/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.ipAddress" value="localhost"/>
-    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDeviceId" value="com.st.stm32cube.ide.mcu.debug.stlink"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDeviceId" value="com.st.stm32cube.ide.mcu.debug.openocd"/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
-    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="61234"/>
+    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="3333"/>
     <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.runCommands" value=""/>
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
     <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="true"/>

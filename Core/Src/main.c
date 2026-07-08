@@ -1,23 +1,7 @@
-/**
-  ******************************************************************************
-  * @file    main.c
-  * @brief   飞特 SCS2332 舵机驱动 — STM32H750XBH6 (反客FK750M5-XBH6)
-  *          UART: USART1 PA9 半双工单总线 1Mbps
-  *          时钟: HSE 25MHz → PLL → 480MHz SYSCLK
-  ******************************************************************************
-  * 接线:
-  *   PA9  ────  舵机信号线 (S), 开漏上拉, 单根线半双工
-  *   GND  ────  舵机 GND
-  *   舵机VCC ── 6~8.4V 外部供电 (勿接H750的3.3V!)
-  ******************************************************************************
-  */
-
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
 #include "SCServo.h"
-
-/* LVGL + 屏幕驱动 */
 #include "sdram.h"
 #include "lcd_rgb.h"
 #include "touch_800x480.h"
@@ -30,93 +14,56 @@
 #include "task.h"
 #include "lvgl_motor.h"
 #include "feetech_motor.h"
-/* 触摸屏是否就绪标志 */
-static uint8_t touch_ok = 0;
+#include "stdlib.h"
+#include "FreeRtos_task.h"
+#include "flex.h"
+#include "Finger.h"
+#include "test_tasks.h"
+#include "calib_tasks.h"
+#include "EMG.h"
+#if ENABLE_DHT11_TASK
+#include "dht11.h"
+#endif
 
+#define LVGL_ONLY_TEST_MODE 0
+
+uint8_t touch_ok = 0;
+void flex_task(void* arg);
+void flex_calibration_task(void * arg);
+void Finger_Map_Update(void* arg);
 //GlobalVar
 volatile int16_t servo_pos_now = 0;
+volatile int16_t  angle_now = 0;
+extern int16_t  Step_Angle_Update(int16_t Angle_Set);
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart3;
 
+extern uint8_t rx_buf[];
+extern uint8_t rx_index ;
+extern uint8_t tx_buf[];
 
-/* ======================== FreeRTOS 任务函数 ======================== */
+extern  volatile int16_t angle_flag;  //舵机中断标志为
+extern  volatile int16_t  angle_value;
 
-static void task_lvgl(void *arg)
-{
-    (void)arg;
-    //lv_demo_widgets();
-    lvgl_motor();
-    TickType_t xLastWakeTime = xTaskGetTickCount();
-    const TickType_t xPeriod = pdMS_TO_TICKS(10); // 与 LV_DISP_DEF_REFR_PERIOD 一致
-    
-    for (;;) {
-        lv_task_handler();
-        if (touch_ok) Touch_Scan();
-        vTaskDelayUntil(&xLastWakeTime, xPeriod); // 严格周期，不受渲染耗时影响
-    }
-}
-
-static void task_servo(void *arg)
-{
-    (void)arg;
-    for (;;) {
-        //EnableTorque(1, 1);            //上电控制
-        WritePos(0, 500,  0, 100);    // 运动到 500 //
-        vTaskDelay(pdMS_TO_TICKS(1500));
-        servo_pos_now = scs_read_reg(15,SCS_POS_NOW,2);  //影响lvgl读数
-        HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
-
-        
-        //EnableTorque(1, 1);
-        WritePos(0, 3500, 0, 100);    
-        vTaskDelay(pdMS_TO_TICKS(1500));
-        servo_pos_now = scs_read_reg(15,SCS_POS_NOW,2);
-        HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_GPIO_PIN);
-    
-       
-    }
-}
-/**
- * @brief LED 闪烁 N 次（Active-LOW，闪一下 = on 100ms + off 150ms）
- * 用于诊断哪一步初始化卡住
- */
-static void diag_blink(uint32_t n)
-{
-    for (uint32_t i = 0; i < n; i++) {
-        HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_RESET); /* ON  */
-        HAL_Delay(120);
-        HAL_GPIO_WritePin(LED_GPIO_PORT, LED_GPIO_PIN, GPIO_PIN_SET);   /* OFF */
-        HAL_Delay(180);
-    }
-    HAL_Delay(400); /* 间隔分隔不同组 */
-}
 
 /* ======================== 飞特舵机硬件接口实现 ======================== */
 
-extern UART_HandleTypeDef huart1;
-
-/**
- * @brief 舵机串口发送 (半双工)
- */
 void ftUart_Send(uint8_t *nDat, int nLen)
 {
-    /* 发送期间关闭接收器，防止回显导致 ORE */
+
     CLEAR_BIT(huart1.Instance->CR1, USART_CR1_RE);
 
     /* HAL 阻塞发送 (内部已等 TXE + TC) */
     HAL_UART_Transmit(&huart1, nDat, nLen, 100);
 
-    /* 重开接收器，同时清除硬件标志和 HAL 错误码 */
     __HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_FEF);
     huart1.ErrorCode = HAL_UART_ERROR_NONE;   /* 必须重置，否则 HAL_UART_Receive 会因该字段非零直接返回 HAL_ERROR */
     SET_BIT(huart1.Instance->CR1, USART_CR1_RE);
 }
 
-/**
- * @brief 舵机串口接收 (半双工)
- */
+
 int ftUart_Read(uint8_t *nDat, int nLen)
 {
-    /* 清硬件标志 + HAL 错误码，否则 HAL_UART_Receive 内部的
-     * UART_WaitOnFlagUntilTimeout 会检测到残留 ORE 并返回 HAL_ERROR */
     __HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_FEF);
     huart1.ErrorCode = HAL_UART_ERROR_NONE;
 
@@ -126,12 +73,10 @@ int ftUart_Read(uint8_t *nDat, int nLen)
     return nLen;
 }
 
-/**
- * @brief 总线延时 (半双工收发切换用)
- */
+
 void ftBus_Delay(void)
 {
-    vTaskDelay(pdMS_TO_TICKS(2));   /* FreeRTOS 任务延时，替换 HAL_Delay */
+    vTaskDelay(pdMS_TO_TICKS(2));  
     __HAL_UART_CLEAR_FLAG(&huart1, UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_FEF);
     huart1.ErrorCode = HAL_UART_ERROR_NONE;
     while (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE)) {
@@ -143,92 +88,114 @@ void ftBus_Delay(void)
 void SystemClock_Config(void);
 static void MPU_Config(void);
 
-/* ======================== 主函数 ======================== */
 
 int main(void)
 {
-    /* H750 必须顺序：MPU → Cache → HAL_Init → 时钟 */
-    MPU_Config();          /* 1. MPU配置SDRAM区(0xC0000000)，必须在DCache前 */
-    SCB_EnableICache();    /* 2. 使能指令缓存 */
-    SCB_EnableDCache();    /* 3. 使能数据缓存 */
-
+    MPU_Config();
+    SCB_EnableICache();
+    SCB_EnableDCache(); 
     HAL_Init();
     SystemClock_Config();
     MX_GPIO_Init();
+#if ENABLE_DHT11_TASK
+    dht11_init();
+#endif
+#if !LVGL_ONLY_TEST_MODE
+    flex_init();
+    EMG_Init();
+#endif
     MX_USART1_UART_Init();
+    MX_USART3_UART_Init();
+    __HAL_UART_ENABLE_IT(&huart3, UART_IT_RXNE); 
+     HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART3_IRQn);
+    HAL_UART_Receive_IT(&huart3, &rx_buf[rx_index], 1);
+    
 
-    /* PLL3 配置：LTDC 像素时钟 = HSE/25 * 330 / 10 = 33MHz
-     * 必须在 MX_GPIO_Init() 之后才配置，这样 Error_Handler 里 LED 才能闪烁 */
     {
         RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
         PeriphClkInitStruct.PeriphClockSelection  = RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_FMC;
         PeriphClkInitStruct.FmcClockSelection     = RCC_FMCCLKSOURCE_D1HCLK;
-        PeriphClkInitStruct.PLL3.PLL3M      = 25;
-        PeriphClkInitStruct.PLL3.PLL3N      = 330;
-        PeriphClkInitStruct.PLL3.PLL3P      = 2;
-        PeriphClkInitStruct.PLL3.PLL3Q      = 2;
-        PeriphClkInitStruct.PLL3.PLL3R      = 10;
-        PeriphClkInitStruct.PLL3.PLL3RGE    = RCC_PLL3VCIRANGE_0;
+        PeriphClkInitStruct.PLL3.PLL3M = 25;
+        PeriphClkInitStruct.PLL3.PLL3N = 330;
+        PeriphClkInitStruct.PLL3.PLL3P = 2;
+        PeriphClkInitStruct.PLL3.PLL3Q = 2;
+        PeriphClkInitStruct.PLL3.PLL3R = 10;
+        PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_0;
         PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOMEDIUM;
-        PeriphClkInitStruct.PLL3.PLL3FRACN  = 0;
+        PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
         if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
-            Error_Handler(); /* 这时 LED GPIO 已初始化，能看到快闪 */
+            Error_Handler();
         }
     }
 
-    //NOTE  该部分函数应封装
-    /*
-     * ===== LED 诊断闪烁规则 =====
-     * 闪 1 次 = 已到达屏幕初始化前（系统基本 OK）
-     * 闪 2 次 = MX_FMC_Init 完成
-     * 闪 3 次 = MX_LTDC_Init 完成
-     * 闪 4 次 = Touch_Init 完成
-     * 闪 5 次 = LVGL 全部初始化完成，进入 while(1)
-     * 如果 LED 卡住在某次闪烁之前：就是那一步卡住了
-     */
-    diag_blink(1);   /* 已过：SystemClock / GPIO / UART 初始化 */
+    #if !LVGL_ONLY_TEST_MODE
+    MX_FMC_Init();         
+    MX_LTDC_Init();         
 
-    /* ---------- 屏幕 + LVGL 初始化 ---------- */
-    MX_FMC_Init();             /* SDRAM 初始化（必须在 LTDC 之前） */
-    diag_blink(2);   /* 已过：MX_FMC_Init */
+    touch_ok = (Touch_Init() == 0); 
 
-    MX_LTDC_Init();            /* LTDC + RGB LCD 初始化 */
-    diag_blink(3);   /* 已过：MX_LTDC_Init */
+    {
+        char touch_buf[32];
+        int len = sprintf(touch_buf, "Touch Init: %s\r\n", touch_ok ? "OK" : "FAIL");
+        HAL_UART_Transmit(&huart3, (uint8_t *)touch_buf, len, 100);
+    }
 
-    touch_ok = (Touch_Init() == 0);  /* GT9XX 触摸屏初始化，0=成功 */
-    diag_blink(4);   /* 已过：Touch_Init */
-    
-    lv_init();                 /* 初始化 LVGL */
-    lv_port_disp_init();       /* 注册显示驱动（双帧缓冲，SDRAM） */
-    lv_port_indev_init();      /* 注册触摸输入驱动 */
+    lv_init();              
+    lv_port_disp_init();       
+    lv_port_indev_init();      
     //lv_demo_benchmark();
+    #endif
    
-    diag_blink(5);   /* 已过：全部初始化，进入 while(1) */
+
+#if !LVGL_ONLY_TEST_MODE
+    setEnd(1);     
+    setLevel(1);
+    Hand_Init();
+
+    //xTaskCreate(flex_calibration_task,"flex_calibration",512,NULL,2,NULL); //校准
+    //xTaskCreate(Finger_Map_Update,"Finger_Map_Update",512,NULL,3,NULL);
+#endif
+    #if !LVGL_ONLY_TEST_MODE
+    xTaskCreate(task_lvgl,  "lvgl",  1024, NULL, 3, NULL);
+    #endif
+#if !LVGL_ONLY_TEST_MODE
+    xTaskCreate(task_touch, "touch", 512,  NULL, 3, NULL);
+#endif
+
+    //xTaskCreate(flex_task, "flex",  512, NULL, 3, NULL); //flex传感器测试
+    //xTaskCreate(task_servo, "servo",  512, NULL, 3, NULL); //舵机串口测试
+    //xTaskCreate(task_usart3, "usart3", 512, NULL, 3, NULL); //单次舵机发送测试
+    //xTaskCreate(id_change_task,"change_motor_id",512,NULL,3,NULL);
+    //xTaskCreate(id_total_task,"total_task",512,NULL,3,NULL);
     
     
-    /* ---------- 飞特舵机初始化 ---------- */
-    setEnd(1);     // SCSCL 系列: 大端存储
-    setLevel(1);   // 关闭应答等待 (舵机仍会发应答包，MCU不读它，避免Ack超时卡死)
+    /*test_tasks*/
+    //xTaskCreate(test_single_flex_task, "test_flex", 512, NULL, 3, NULL);
+    //xTaskCreate(test_pa0_index_root_task, "pa0_index", 512, NULL, 3, NULL);
+    //xTaskCreate(flex_calib_task, "flex_calib", 512, NULL, 2, NULL);
+    //xTaskCreate(flex_debug_task,"flex_debug_task",512,NULL,3,NULL);
+    //xTaskCreate(test_index_event_recorder_task, "idx_evt", 1024, NULL, 2, NULL);
 
 
-    //warning:启动时应创建相应的任务
-    xTaskCreate(task_lvgl,  "lvgl",  1024, NULL, 2, NULL);
-    xTaskCreate(task_servo, "servo",  512, NULL, 3, NULL); /* 高于 lvgl，但自身大部分时间在 vTaskDelay 里睡眠 */
+#if ENABLE_DHT11_TASK
+    xTaskCreate(dht11_test,"dht11test",512,NULL,3,NULL);
+#endif
+
+#if !LVGL_ONLY_TEST_MODE
+    xTaskCreate(Finger_All_Control_TASK, "finger_all", 768, NULL, 3, NULL);
+    xTaskCreate(EMG_TASK,"EMG_TASK",512,NULL,3,NULL);
+#endif
+    //xTaskCreate(flex_all_calib_task, "flex_all_calib", 1024, NULL, 4, NULL);  //标定完成会把calib_ok置1
     
-    
-    
+
     vTaskStartScheduler();
 
-    /* 正常不会到这里 */
+    /*！！！ //xTaskCreate(id_change_task,"change_motor_id",512,NULL,3,NULL); //ID修改*/
+
     for (;;) {}
 }
-/* ======================== 时钟配置 (HSE 25MHz → PLL → 480MHz) ========================
- *   HSE = 25MHz (反客FK750M5-XBH6 板载晶振)
- *   PLL1: M=5 → 5MHz VCI, N=192 → VCO=960MHz, P=2 → SYSCLK=480MHz
- *   HCLK   = 480/2  = 240 MHz
- *   APB1/2/3/4 = 240/2 = 120 MHz
- *   Flash Latency = 4WS (VOS0, 240MHz AXI)
- * ==================================================================================== */
+
 
 void SystemClock_Config(void)
 {
@@ -281,11 +248,7 @@ void SystemClock_Config(void)
     /* PLL3 在 main() 里配置，必须在 MX_GPIO_Init() 之后调用（不在这里！） */
 }
 
-/* ======================== MPU 配置 ========================
- * 为外部SDRAM区域(0xC0000000, 32MB)设置Cacheable/Write-Through属性
- * 即使本工程不主动使用SDRAM，也需配置以防DCache对该区域产生误操作
- * (反客FK750M5-XBH6 板载 32MB 16bit SDRAM)
- * ========================================================== */
+
 static void MPU_Config(void)
 {
     MPU_Region_InitTypeDef MPU_InitStruct = {0};

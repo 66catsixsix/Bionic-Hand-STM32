@@ -1,5 +1,8 @@
 {
     "C_Cpp.intelliSenseEngine": "default",
     "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
-    "clangd.enabled": false
+    "clangd.enabled": false,
+    "cmake.sourceDirectory": "/home/ovo/文档/every/feetech_servo_h750/qt_app",
+    "editor.semanticHighlighting.enabled": false,
+    "editor.fontFamily": "'Fira Code', monospace"
 }

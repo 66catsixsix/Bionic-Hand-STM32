@@ -21,6 +21,7 @@ MEMORY
   RAM_D3   (xrw) : ORIGIN = 0x38000000, LENGTH = 64K
   ITCMRAM  (xrw) : ORIGIN = 0x00000000, LENGTH = 64K
   SDRAM    (xrw) : ORIGIN = 0xC0000000, LENGTH = 32M    /* 板载 32MB SDRAM (FMC) */
+  SDRAM_HEAP (xrw) : ORIGIN = 0xC0800000, LENGTH = 24M  /* 避开 LCD 帧缓冲和 LVGL 内存池 */
 }
 
 SECTIONS
@@ -126,7 +127,7 @@ SECTIONS
     . = ALIGN(8);
   } >RAM_D1
 
-  /* FreeRTOS 堆：放在外部 SDRAM，不占 Flash，启动后由 heap_4.c 自行初始化 */
+  /* FreeRTOS 堆：放到更高地址的 SDRAM，避免覆盖 LCD framebuffer/LVGL 内存池 */
   .sdram_bss (NOLOAD) :
   {
     . = ALIGN(8);
@@ -135,7 +136,7 @@ SECTIONS
     *(.sdram_bss*)
     . = ALIGN(8);
     _sdram_bss_end = .;
-  } >SDRAM
+  } >SDRAM_HEAP
 
   /DISCARD/ :
   {

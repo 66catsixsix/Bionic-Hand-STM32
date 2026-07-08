@@ -1,5 +1,0 @@
-../SCSLib/SCSerail.c:17:5:readSCS	1
-../SCSLib/SCSerail.c:23:5:writeSCS	3
-../SCSLib/SCSerail.c:35:5:writeByteSCS	2
-../SCSLib/SCSerail.c:45:6:rFlushSCS	1
-../SCSLib/SCSerail.c:51:6:wFlushSCS	2

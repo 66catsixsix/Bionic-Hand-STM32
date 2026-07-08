@@ -1,4 +1,0 @@
-../my_drivers/User/Src/lcd_pwm.c:39:6:HAL_TIM_MspPostInit	2
-../my_drivers/User/Src/lcd_pwm.c:65:7:LCD_PwmSetPulse	1
-../my_drivers/User/Src/lcd_pwm.c:82:7:LCD_PWMinit	1
-../my_drivers/User/Src/lcd_pwm.c:126:6:HAL_TIM_Base_MspInit	2

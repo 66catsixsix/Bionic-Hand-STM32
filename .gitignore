@@ -1,0 +1,59 @@
+# Build output
+Debug/
+Release/
+build/
+build_*/
+
+# IDE
+.settings/
+.idea/
+.cache/
+.marscode/
+.codex
+.agents/
+
+# Compile files
+compile_commands.json
+
+# Object files
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
+# Keil MDK build artifacts
+*.axf
+*.dep
+*.htm
+*.lnp
+*.uvguix.*
+*.dbgconf
+
+# Qt build artifacts
+qt_app/build/
+qt_app/.qt/
+qt_app/BionicHandHost_autogen/
+qt_app/BionicHandHost
+
+# LVGL simulator build
+lvgl_ui_simulator/build/
+
+# Boot
+boot/
+
+# Snapshots
+snapshots/
+
+# Logs
+*.log
+
+# Thesis
+thesis_assets/
+thesis_rewrite/
+
+# System
+.DS_Store
+Thumbs.db

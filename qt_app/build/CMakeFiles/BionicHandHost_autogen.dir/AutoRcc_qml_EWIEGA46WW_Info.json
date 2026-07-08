@@ -1,0 +1,25 @@
+{
+	"BUILD_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/BionicHandHost_autogen",
+	"CMAKE_BINARY_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app",
+	"CMAKE_SOURCE_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app",
+	"INCLUDE_DIR" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/BionicHandHost_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/ovo/Documents/every/feetech_servo_h750/qt_app/qml/RehabMonitor.qml",
+		"/home/ovo/Documents/every/feetech_servo_h750/qt_app/qml/SerialControl.qml",
+		"/home/ovo/Documents/every/feetech_servo_h750/qt_app/qml/FreeControl.qml",
+		"/home/ovo/Documents/every/feetech_servo_h750/qt_app/qml/main.qml"
+	],
+	"LOCK_FILE" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/BionicHandHost_autogen.dir/AutoRcc_qml_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "qml" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_qml.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/build/CMakeFiles/BionicHandHost_autogen.dir/AutoRcc_qml_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/ovo/Documents/every/feetech_servo_h750/qt_app/qml.qrc",
+	"VERBOSITY" : 0
+}

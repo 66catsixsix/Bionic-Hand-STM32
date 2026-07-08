@@ -1,4 +1,0 @@
-../my_drivers/User/Src/sdram.c:37:13:HAL_FMC_MspInit	1
-../my_drivers/User/Src/sdram.c:127:6:HAL_SDRAM_MspInit	1
-../my_drivers/User/Src/sdram.c:141:6:SDRAM_Initialization_Sequence	1
-../my_drivers/User/Src/sdram.c:196:6:MX_FMC_Init	1

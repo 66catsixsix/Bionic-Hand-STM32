@@ -1713,7 +1713,7 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
 
         return pxNewTCB;
     }
-/*-----------------------------------------------------------*/
+
 
     BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
                             const char * const pcName,

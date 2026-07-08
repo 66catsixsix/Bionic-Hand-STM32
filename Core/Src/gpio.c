@@ -12,6 +12,10 @@ void MX_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
+    //ADC时钟
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOF_CLK_ENABLE();
     /* LED GPIO 时钟使能 (PC13) */
     __HAL_RCC_GPIOC_CLK_ENABLE();
 
